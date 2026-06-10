@@ -9,11 +9,11 @@ import {
   SetEntry,
 } from "@/lib/types";
 
-// Shared 6-column grid: set# | reps | kg | lbs | flexible gap | remove.
-// The steppers are a fixed (slightly smaller) width that still fits 4-figure
-// values like "113.6"; the 1fr gap pushes the ✕ away so it's not mis-tapped.
+// Shared 5-column grid: reps | kg | lbs | flexible gap | remove.
+// The steppers are a fixed width that still fits 4-figure values like "113.6";
+// the 1fr gap pushes the ✕ away so it's not mis-tapped.
 const ROW =
-  "grid grid-cols-[0.7rem_4.7rem_4.7rem_4.7rem_1fr_0.7rem] items-center gap-1";
+  "grid grid-cols-[4.7rem_4.7rem_4.7rem_1fr_0.7rem] items-center gap-1";
 
 export default function StrengthSheet({
   session,
@@ -102,7 +102,6 @@ export default function StrengthSheet({
           </div>
 
           <div className={`${ROW} mb-1 text-[10px] font-bold uppercase tracking-wide text-stone-400`}>
-            <span />
             <span className="text-center">Reps</span>
             <span className="text-center">kg</span>
             <span className="text-center">lbs</span>
@@ -111,11 +110,8 @@ export default function StrengthSheet({
           </div>
 
           <div className="space-y-1.5">
-            {ex.sets.map((set, setIdx) => (
+            {ex.sets.map((set) => (
               <div key={set.id} className={ROW}>
-                <span className="text-center text-xs font-bold text-peach-500">
-                  {setIdx + 1}
-                </span>
                 <Stepper
                   canonical={set.reps}
                   onChange={(r) => updateSet(ex.id, set.id, { reps: r })}
