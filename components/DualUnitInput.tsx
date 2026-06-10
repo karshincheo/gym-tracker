@@ -8,12 +8,12 @@ interface Props {
   onChange: (canonical: number | null) => void;
   toSecondary: (c: number) => number; // e.g. kgToLbs
   fromSecondary: (s: number) => number; // e.g. lbsToKg
-  primaryLabel: string; // "kg"
-  secondaryLabel: string; // "lbs"
   primaryDecimals?: number;
   secondaryDecimals?: number;
-  placeholder?: string;
 }
+
+const INPUT_CLASS =
+  "w-full min-w-0 rounded-lg border-2 border-peach-100 bg-white px-1.5 py-1.5 text-center text-sm font-semibold text-stone-700 outline-none transition focus:border-peach-400 focus:ring-1 focus:ring-peach-200";
 
 function fmt(n: number | null, decimals: number): string {
   if (n == null) return "";
@@ -28,26 +28,23 @@ function parse(raw: string): number | null {
   return n;
 }
 
+// Renders the kg and lbs fields as two bare inputs (via display:contents) so the
+// parent grid can place them in aligned columns. Unit labels live in the column
+// header, not inside the fields, so decimal values have the full width to show.
 export default function DualUnitInput({
   canonical,
   onChange,
   toSecondary,
   fromSecondary,
-  primaryLabel,
-  secondaryLabel,
   primaryDecimals = 1,
   secondaryDecimals = 1,
-  placeholder = "0",
 }: Props) {
   const [primaryText, setPrimaryText] = useState(() => fmt(canonical, primaryDecimals));
   const [secondaryText, setSecondaryText] = useState(() =>
     canonical == null ? "" : fmt(toSecondary(canonical), secondaryDecimals)
   );
 
-  // Track the canonical value we ourselves last emitted. When the incoming
-  // `canonical` matches it, the change is just our own echo coming back through
-  // props — ignore it so we never clobber what the user is typing. Only a
-  // genuinely external change (e.g. cloud merge) re-syncs the visible fields.
+  // Ignore prop changes that are just our own echo; only re-sync on external changes.
   const lastEmitted = useRef<number | null>(canonical);
 
   useEffect(() => {
@@ -75,47 +72,23 @@ export default function DualUnitInput({
   }
 
   return (
-    <div className="flex gap-2">
-      <UnitField
-        value={primaryText}
-        label={primaryLabel}
-        placeholder={placeholder}
-        onChange={onPrimary}
-      />
-      <UnitField
-        value={secondaryText}
-        label={secondaryLabel}
-        placeholder={placeholder}
-        onChange={onSecondary}
-      />
-    </div>
-  );
-}
-
-function UnitField({
-  value,
-  label,
-  placeholder,
-  onChange,
-}: {
-  value: string;
-  label: string;
-  placeholder: string;
-  onChange: (v: string) => void;
-}) {
-  return (
-    <div className="relative flex-1">
+    <div className="contents">
       <input
         type="text"
         inputMode="decimal"
-        value={value}
-        placeholder={placeholder}
-        onChange={(e) => onChange(e.target.value)}
-        className="w-full rounded-xl border-2 border-peach-100 bg-white px-3 py-3 pr-10 text-base font-semibold text-stone-700 outline-none transition focus:border-peach-400 focus:ring-2 focus:ring-peach-200"
+        value={primaryText}
+        placeholder="0"
+        onChange={(e) => onPrimary(e.target.value)}
+        className={INPUT_CLASS}
       />
-      <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-xs font-bold uppercase tracking-wide text-peach-400">
-        {label}
-      </span>
+      <input
+        type="text"
+        inputMode="decimal"
+        value={secondaryText}
+        placeholder="0"
+        onChange={(e) => onSecondary(e.target.value)}
+        className={INPUT_CLASS}
+      />
     </div>
   );
 }

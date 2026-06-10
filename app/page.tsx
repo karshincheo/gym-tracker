@@ -51,22 +51,6 @@ export default function HomePage() {
         <SyncBadge />
       </header>
 
-      <section className="mb-6 overflow-hidden rounded-xl2 bg-gradient-to-br from-peach-300 to-peach-500 p-5 text-white shadow-lg">
-        <div className="flex items-center gap-3">
-          <span className="text-5xl animate-floaty" aria-hidden>
-            🐶
-          </span>
-          <div>
-            <p className="text-lg font-extrabold leading-tight">
-              Let&apos;s get strong today!
-            </p>
-            <p className="text-sm font-medium text-white/90">
-              Tap a workout below and log your sets. 🦴
-            </p>
-          </div>
-        </div>
-      </section>
-
       <div className="space-y-4">
         {WORKOUT_TYPES.map((type) => {
           const meta = TYPE_META[type];
