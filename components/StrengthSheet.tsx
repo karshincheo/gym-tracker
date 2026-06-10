@@ -1,6 +1,6 @@
 "use client";
 
-import DualUnitInput from "./DualUnitInput";
+import Stepper from "./Stepper";
 import { kgToLbs, lbsToKg } from "@/lib/units";
 import {
   ExerciseEntry,
@@ -11,7 +11,7 @@ import {
 
 // Shared 5-column grid: set# | reps | kg | lbs | remove. Used for both the
 // header labels and each set row so columns line up.
-const ROW = "grid grid-cols-[1.6rem_1fr_1fr_1fr_1.1rem] items-center gap-1.5";
+const ROW = "grid grid-cols-[0.7rem_1fr_1fr_1fr_0.7rem] items-center gap-0.5";
 
 export default function StrengthSheet({
   session,
@@ -99,7 +99,7 @@ export default function StrengthSheet({
             )}
           </div>
 
-          <div className={`${ROW} mb-1 px-0.5 text-[10px] font-bold uppercase tracking-wide text-stone-400`}>
+          <div className={`${ROW} mb-1 text-[10px] font-bold uppercase tracking-wide text-stone-400`}>
             <span />
             <span className="text-center">Reps</span>
             <span className="text-center">kg</span>
@@ -110,28 +110,29 @@ export default function StrengthSheet({
           <div className="space-y-1.5">
             {ex.sets.map((set, setIdx) => (
               <div key={set.id} className={ROW}>
-                <span className="grid h-6 w-6 place-items-center rounded-full bg-peach-100 text-xs font-bold text-peach-600">
+                <span className="text-center text-xs font-bold text-peach-500">
                   {setIdx + 1}
                 </span>
-                <input
-                  type="text"
-                  inputMode="numeric"
-                  value={set.reps ?? ""}
-                  placeholder="0"
-                  onChange={(e) => {
-                    const v = e.target.value.trim();
-                    const n = v === "" ? null : Math.max(0, Math.floor(Number(v)));
-                    updateSet(ex.id, set.id, {
-                      reps: v === "" || isNaN(Number(v)) ? null : n,
-                    });
-                  }}
-                  className="w-full min-w-0 rounded-lg border-2 border-peach-100 bg-white px-1.5 py-1.5 text-center text-sm font-semibold text-stone-700 outline-none focus:border-peach-400 focus:ring-1 focus:ring-peach-200"
+                <Stepper
+                  canonical={set.reps}
+                  onChange={(r) => updateSet(ex.id, set.id, { reps: r })}
+                  step={1}
+                  integer
+                  decimals={0}
                 />
-                <DualUnitInput
+                <Stepper
                   canonical={set.weightKg}
                   onChange={(kg) => updateSet(ex.id, set.id, { weightKg: kg })}
-                  toSecondary={kgToLbs}
-                  fromSecondary={lbsToKg}
+                  step={1}
+                  decimals={1}
+                />
+                <Stepper
+                  canonical={set.weightKg}
+                  onChange={(kg) => updateSet(ex.id, set.id, { weightKg: kg })}
+                  toDisplay={kgToLbs}
+                  fromDisplay={lbsToKg}
+                  step={1}
+                  decimals={1}
                 />
                 {ex.sets.length > 1 ? (
                   <button
