@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-sans: ui-rounded, "SF Pro Rounded", "Segoe UI", system-ui, -apple-system,
+    sans-serif;
+}
+
+html,
+body {
+  background:
+    radial-gradient(1200px 600px at 50% -10%, #fff1e0 0%, transparent 60%),
+    linear-gradient(180deg, #fffaf3 0%, #fef6ef 100%);
+  background-attachment: fixed;
+  color: #44403c;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Bigger, friendlier scrollbars off, smooth scrolling on */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Confetti / paw burst used on save */
+@keyframes burst-up {
+  0% {
+    transform: translateY(0) scale(0.6);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-90px) scale(1.2) rotate(20deg);
+    opacity: 0;
+  }
+}
+.paw-burst span {
+  position: absolute;
+  animation: burst-up 0.9s ease-out forwards;
+}
