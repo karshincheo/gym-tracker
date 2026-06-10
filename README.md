@@ -32,7 +32,7 @@ npm run dev
 
 ## Cloud config (Supabase)
 
-Reads these (with public fallbacks baked in so deploys work out of the box):
+Cloud sync is optional — without config the app runs fully local-first. To enable it, set:
 
 ```
 NEXT_PUBLIC_SUPABASE_URL
@@ -51,8 +51,8 @@ npx vercel login      # one-time
 npx vercel deploy --prod
 ```
 
-Env vars are baked in as fallbacks, so the deployed site has cloud sync with no extra
-config (you can still set the two `NEXT_PUBLIC_*` vars in Vercel for best practice).
+Set the two `NEXT_PUBLIC_*` env vars in the Vercel project settings to enable cloud
+sync on the deployed site; without them it still works, saving to the device only.
 
 ## Stack
 

@@ -2,18 +2,11 @@ import { createClient, SupabaseClient } from "@supabase/supabase-js";
 import type { Session } from "./types";
 
 // Cloud sync is OPTIONAL. If config is missing the app still runs fully from
-// localStorage (local-first). This lets us develop/test before the cloud exists.
-//
-// The Supabase URL + publishable key are PUBLIC by design — they ship in the
-// browser bundle for any Supabase client app. Row-level security (not the key)
-// is what protects data. We keep them as fallbacks so the deployed build always
-// has cloud sync even if env vars aren't configured on the host; env vars still
-// win when present.
-const FALLBACK_URL = "https://jzahdldnrcrusubmvxnh.supabase.co";
-const FALLBACK_ANON_KEY = "sb_publishable_EVDIDwULTOOmde5FV-1ZuQ_TlXVyyDr";
-
-const url = process.env.NEXT_PUBLIC_SUPABASE_URL || FALLBACK_URL;
-const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || FALLBACK_ANON_KEY;
+// localStorage (local-first). Configure via env vars (.env.local for dev,
+// project settings on the host for deploys) — this app has no login and a
+// shared dataset, so the URL + key must never be committed to the repo.
+const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
 let client: SupabaseClient | null = null;
 if (url && anonKey) {
