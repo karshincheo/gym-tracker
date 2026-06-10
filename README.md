@@ -14,11 +14,6 @@ npm run dev
 # open http://localhost:3000
 ```
 
-> Note: running from a cloud-synced folder (OneDrive/Dropbox/iCloud) can stall the
-> Next.js dev server, since those services lock files while syncing. If `npm run dev`
-> hangs, copy the project to a plain local folder (e.g. `~/Projects/gym-tracker`) and
-> run it there.
-
 ## How it works
 
 - **Two workouts, one running list each.** Upper Body and Lower Body. Each is a single
@@ -57,3 +52,10 @@ sync on the deployed site; without them it still works, saving to the device onl
 ## Stack
 
 Next.js (App Router) · React · TypeScript · Tailwind CSS · Supabase.
+
+## Known quirk
+
+> Note: running from a cloud-synced folder (OneDrive/Dropbox/iCloud) can stall the
+> Next.js dev server, since those services lock files while syncing. If `npm run dev`
+> hangs, copy the project to a plain local folder (e.g. `~/Projects/gym-tracker`) and
+> run it there.
