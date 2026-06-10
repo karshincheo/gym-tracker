@@ -9,11 +9,11 @@ import {
   SetEntry,
 } from "@/lib/types";
 
-// Shared 5-column grid: reps | kg | lbs | flexible gap | remove.
+// Shared 5-column grid: reps | kg | lbs | small gap | remove.
 // The steppers are a fixed width that still fits 4-figure values like "113.6";
-// the 1fr gap pushes the ✕ away so it's not mis-tapped.
+// the fixed gap separates the ✕ just enough that it's not mis-tapped.
 const ROW =
-  "grid grid-cols-[4.7rem_4.7rem_4.7rem_1fr_0.7rem] items-center gap-1";
+  "grid grid-cols-[4.7rem_4.7rem_4.7rem_0.5rem_0.7rem] items-center gap-1";
 
 export default function StrengthSheet({
   session,
