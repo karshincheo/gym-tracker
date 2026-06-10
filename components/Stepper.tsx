@@ -81,7 +81,7 @@ export default function Stepper({
         type="button"
         aria-label="decrease"
         onClick={() => bump(-1)}
-        className="shrink-0 bg-peach-50 px-1 text-sm font-bold leading-none text-peach-500 active:bg-peach-200"
+        className="shrink-0 bg-peach-50 px-1 text-xs font-bold leading-none text-peach-500 active:bg-peach-200"
       >
         −
       </button>
@@ -97,7 +97,7 @@ export default function Stepper({
         type="button"
         aria-label="increase"
         onClick={() => bump(1)}
-        className="shrink-0 bg-peach-50 px-1 text-sm font-bold leading-none text-peach-500 active:bg-peach-200"
+        className="shrink-0 bg-peach-50 px-1 text-xs font-bold leading-none text-peach-500 active:bg-peach-200"
       >
         +
       </button>

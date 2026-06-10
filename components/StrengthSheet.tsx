@@ -9,9 +9,11 @@ import {
   SetEntry,
 } from "@/lib/types";
 
-// Shared 5-column grid: set# | reps | kg | lbs | remove. Used for both the
-// header labels and each set row so columns line up.
-const ROW = "grid grid-cols-[0.7rem_1fr_1fr_1fr_0.7rem] items-center gap-0.5";
+// Shared 6-column grid: set# | reps | kg | lbs | flexible gap | remove.
+// The steppers are a fixed (slightly smaller) width that still fits 4-figure
+// values like "113.6"; the 1fr gap pushes the ✕ away so it's not mis-tapped.
+const ROW =
+  "grid grid-cols-[0.7rem_4.7rem_4.7rem_4.7rem_1fr_0.7rem] items-center gap-1";
 
 export default function StrengthSheet({
   session,
@@ -105,6 +107,7 @@ export default function StrengthSheet({
             <span className="text-center">kg</span>
             <span className="text-center">lbs</span>
             <span />
+            <span />
           </div>
 
           <div className="space-y-1.5">
@@ -134,11 +137,12 @@ export default function StrengthSheet({
                   step={1}
                   decimals={1}
                 />
+                <span />
                 {ex.sets.length > 1 ? (
                   <button
                     onClick={() => removeSet(ex.id, set.id)}
                     aria-label="Remove set"
-                    className="text-stone-300 hover:text-red-500"
+                    className="justify-self-end text-stone-300 hover:text-red-500"
                   >
                     ✕
                   </button>
