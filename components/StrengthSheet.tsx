@@ -95,54 +95,50 @@ export default function StrengthSheet({
             )}
           </div>
 
-          <div className="mb-1 hidden grid-cols-[2.5rem_4.5rem_1fr] gap-2 px-1 text-xs font-bold uppercase tracking-wide text-stone-400 sm:grid">
-            <span>Set</span>
-            <span>Reps</span>
-            <span>Weight</span>
-          </div>
-
           <div className="space-y-2">
             {ex.sets.map((set, setIdx) => (
               <div
                 key={set.id}
-                className="grid grid-cols-[2.5rem_4.5rem_1fr_auto] items-center gap-2"
+                className="rounded-xl border border-peach-100 bg-white p-2.5"
               >
-                <span className="grid h-9 w-9 place-items-center rounded-full bg-peach-100 text-sm font-bold text-peach-600">
-                  {setIdx + 1}
-                </span>
-                <input
-                  type="text"
-                  inputMode="numeric"
-                  value={set.reps ?? ""}
-                  placeholder="reps"
-                  onChange={(e) => {
-                    const v = e.target.value.trim();
-                    const n = v === "" ? null : Math.max(0, Math.floor(Number(v)));
-                    updateSet(ex.id, set.id, {
-                      reps: v === "" || isNaN(Number(v)) ? null : n,
-                    });
-                  }}
-                  className="w-full rounded-xl border-2 border-peach-100 bg-white px-2 py-3 text-center text-base font-semibold text-stone-700 outline-none focus:border-peach-400 focus:ring-2 focus:ring-peach-200"
-                />
-                <DualUnitInput
-                  canonical={set.weightKg}
-                  onChange={(kg) => updateSet(ex.id, set.id, { weightKg: kg })}
-                  toSecondary={kgToLbs}
-                  fromSecondary={lbsToKg}
-                  primaryLabel="kg"
-                  secondaryLabel="lbs"
-                />
-                {ex.sets.length > 1 ? (
-                  <button
-                    onClick={() => removeSet(ex.id, set.id)}
-                    aria-label="Remove set"
-                    className="grid h-9 w-7 place-items-center rounded-lg text-stone-300 hover:bg-red-50 hover:text-red-500"
-                  >
-                    ✕
-                  </button>
-                ) : (
-                  <span className="w-7" />
-                )}
+                <div className="flex items-center gap-2">
+                  <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-peach-100 text-sm font-bold text-peach-600">
+                    {setIdx + 1}
+                  </span>
+                  <input
+                    type="text"
+                    inputMode="numeric"
+                    value={set.reps ?? ""}
+                    placeholder="reps"
+                    onChange={(e) => {
+                      const v = e.target.value.trim();
+                      const n = v === "" ? null : Math.max(0, Math.floor(Number(v)));
+                      updateSet(ex.id, set.id, {
+                        reps: v === "" || isNaN(Number(v)) ? null : n,
+                      });
+                    }}
+                    className="w-full flex-1 rounded-xl border-2 border-peach-100 bg-white px-3 py-2.5 text-base font-semibold text-stone-700 outline-none focus:border-peach-400 focus:ring-2 focus:ring-peach-200"
+                  />
+                  {ex.sets.length > 1 && (
+                    <button
+                      onClick={() => removeSet(ex.id, set.id)}
+                      aria-label="Remove set"
+                      className="grid h-8 w-8 shrink-0 place-items-center rounded-lg text-stone-300 hover:bg-red-50 hover:text-red-500"
+                    >
+                      ✕
+                    </button>
+                  )}
+                </div>
+                <div className="mt-2">
+                  <DualUnitInput
+                    canonical={set.weightKg}
+                    onChange={(kg) => updateSet(ex.id, set.id, { weightKg: kg })}
+                    toSecondary={kgToLbs}
+                    fromSecondary={lbsToKg}
+                    primaryLabel="kg"
+                    secondaryLabel="lbs"
+                  />
+                </div>
               </div>
             ))}
           </div>
