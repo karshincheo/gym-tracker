@@ -1,5 +1,7 @@
 # Pup Gains 🐾 — Gym Tracker
 
+[![CI](https://github.com/karshincheo/gym-tracker/actions/workflows/ci.yml/badge.svg)](https://github.com/karshincheo/gym-tracker/actions/workflows/ci.yml)
+
 A happy, mobile-first gym tracker for **Upper Body** and **Lower Body** workouts.
 The home page has two expandable sections — tap one open and edit that workout's
 exercises, sets, reps, and weights right there. Weights auto-convert between **kg and
@@ -39,14 +41,10 @@ workout as a row with a `jsonb` payload, keyed by a stable id per type. There is
 login** by design — a single shared dataset behind the URL, so keep the URL private.
 (To add a PIN later: gate the app shell and scope rows by a `user_token` column.)
 
-## Deploy to Vercel
+## Deploy
 
-```bash
-npx vercel login      # one-time
-npx vercel deploy --prod
-```
-
-Set the two `NEXT_PUBLIC_*` env vars in the Vercel project settings to enable cloud
+Deploys to GitHub Pages via the workflow in `.github/workflows/` on every push to
+`main`. Set the two `NEXT_PUBLIC_*` env vars as repository secrets to enable cloud
 sync on the deployed site; without them it still works, saving to the device only.
 
 ## Stack
